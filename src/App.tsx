@@ -1,6 +1,6 @@
 import logo from './pokedex-logo.png';
 import './App.css';
-import {fetchPokemon} from './Api';
+import {fetchPokemon} from './Api.tsx';
 import React, {useState} from 'react';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   const [error, setError] = useState(null);
 
   const randInt = (min, max) => {
-    Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   const handleSearch = async () => {
@@ -30,10 +30,9 @@ function App() {
 
   const handleRandomSearch = async () => {
       const randNum = randInt(1, 1025);
-      const data = await fetchPokemon(randNum);
+      const data = await fetchPokemon(randNum.toString());
       setPokemonData(data);
       setError(null);
-      console.log(randNum);
   };
 
   return (
@@ -52,7 +51,17 @@ function App() {
         </div>
       </header>
       <main className="App-main">
-        <div className="App-main-background"></div>
+        <div className="App-main-background">
+        {pokemonData && (
+          <div className="pokemon-display">
+            <h2>
+              {pokemonData.name.toUpperCase()}
+            </h2>
+            <img src={pokemonData.sprites.front_default} alt={pokemonData.name}></img>
+            <p>Pokedex Number: {pokemonData.id}</p>
+          </div>
+        )}
+        </div>
     </main>
     </div>
   );
