@@ -12,3 +12,18 @@ export async function fetchPokemon(pokemonName) {
         throw error;
     }
 }
+
+export async function fetchAbilityDetails(url) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTPS error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching ability details", error);
+      throw error;
+    }
+  }
+  
